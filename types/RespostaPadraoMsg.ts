@@ -4,4 +4,4 @@ export type RespostaPadraoMsg = {
     erro? : string
 }
 
-// este arquivo será utilizado para tipagem das respostas de status 
+// este arquivo será utilizado para tipagem das respostas de status de req e res por padrão.

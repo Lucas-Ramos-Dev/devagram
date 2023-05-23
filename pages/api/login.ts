@@ -27,7 +27,7 @@ const endpointLogin = async(req: NextApiRequest, res: NextApiResponse <RespostaP
             const usuarioEncontrado = usuariosEncontrados[0];
 
             const token = jwt.sign({_id: usuarioEncontrado._id}, MINHA_CHAVE_JWT);
-            console.log('Usuário logado com sucesso!')
+            console.log('Usuário logado e token gerado com sucesso!')
             return res.status(200).json({
                 nome: usuarioEncontrado.nome,
                 email: usuarioEncontrado.email,

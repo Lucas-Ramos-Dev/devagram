@@ -11,8 +11,8 @@ const endpointCadastro =
     async (req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg>) => {
 
         try{
-            if(req.method === 'POST'){
 
+            if(req.method === 'POST'){
                 //capturando os dados do body e tranformando-os nos dados tipados somente com as propriedades necessárias para o usuário realizar o cadastro.    
                 const usuario = req.body as CadstroRequisicao;
     
@@ -54,13 +54,10 @@ const endpointCadastro =
             }else{
                 return res.status(405).json({erro: 'Método informado não é válido!'});
             }
-        
-        }catch(erro){
-            console.log(erro);
-            return res.status(500).json({erro: 'Erro ao criar usuário!'});
+        }catch(erroGerado){
+            console.log(erroGerado);
         }
 
-        
 }
 
 export default conectMongoDB(endpointCadastro);

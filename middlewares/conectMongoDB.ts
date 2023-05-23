@@ -1,4 +1,3 @@
-
 import type { NextApiRequest, NextApiResponse, NextApiHandler} from 'next';
 import mongoose from 'mongoose';
 import { RespostaPadraoMsg } from '../types/RespostaPadraoMsg';
@@ -33,7 +32,6 @@ export const conectMongoDB = (handler: NextApiHandler) =>
 
                 //agora posso seguir para o meu endpoint, pois o banco de dados está conectado
                 return handler(req, res);
-                
             }
         }
     }

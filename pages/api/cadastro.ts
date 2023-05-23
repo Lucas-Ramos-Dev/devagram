@@ -18,6 +18,7 @@ const endpointCadastro =
     
                 //validando os dados recebidos (nome, email, senha)
                 if(!usuario.nome || usuario.nome.length < 2){
+                    console.log('Nome inválido!')
                     return res.status(400).json({erro: 'Nome inválido!'});
                 }
     
@@ -27,16 +28,19 @@ const endpointCadastro =
                     || !usuario.email.includes('@') 
                     || !usuario.email.includes('.') 
                     ){
+                        console.log('E-mail inválido!')
                         return res.status(400).json({erro: 'E-mail inválido!'});
                 }
     
                 if(!usuario.senha || usuario.senha.length < 4){
+                    console.log('Senha inválido!')
                     return res.status(400).json({erro: 'Senha inválido!'});
                 }
     
                 //realizando validação para verificar duplicidade de contas onde é retornado um status(400) devido já ser existente. 
                 const usuariosComMesmoEmail = await UsuarioModel.find({email: usuario.email});
                 if(usuariosComMesmoEmail && usuariosComMesmoEmail.length > 0){
+                    console.log('Já existe uma conta com o email informado!');
                     return res.status(400).json({erro: 'Já existe uma conta com o email informado!'});
                 }
     
@@ -49,9 +53,11 @@ const endpointCadastro =
     
                 //operação assíncrona, criando e salvando no banco de dados e retornando um status(200) de criação de usuário com sucesso 
                 await UsuarioModel.create(usuarioASerSalvo);
+                console.log('Usuário criado com sucesso!')
                 return res.status(200).json({msg: 'Usuário criado com sucesso!'});
             
             }else{
+                console.log('Método Informado não é válido!')
                 return res.status(405).json({erro: 'Método informado não é válido!'});
             }
         }catch(erroGerado){

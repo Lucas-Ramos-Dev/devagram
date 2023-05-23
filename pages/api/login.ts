@@ -14,6 +14,7 @@ const endpointLogin = async(req: NextApiRequest, res: NextApiResponse <RespostaP
     //verificando se a .env está criada e informada
     const { MINHA_CHAVE_JWT } = process.env;
     if(!MINHA_CHAVE_JWT){
+        console.log('ENV JWT não informada!');
         return res.status(500).json({erro: 'ENV JWT não informada!'});
     }
 
@@ -32,11 +33,13 @@ const endpointLogin = async(req: NextApiRequest, res: NextApiResponse <RespostaP
                 token});
 
         }else{
+            console.log('Usuário ou senha inválido!');
             return res.status(400).json({erro: 'Usuário ou senha inválido!'});
         }
 
     }else{
         //retorna o status de uma requisição (405 - method not allowed(método não permitido)) feita pelo usuário onde esta requisição não é permitida
+        console.log('Método Informado não é válido!');
         return res.status(405).json({erro: 'Método Informado não é válido!'});
     }  
 }

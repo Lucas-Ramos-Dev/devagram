@@ -8,7 +8,7 @@ const UsuarioSchema = new Schema ({
     avatar: {type: String, require: false},
     seguidores: {type: Number, default: 0},
     seguindo: {type: Number, default: 0},
-    publicacoes: {type: Number, require: 0},
+    publicacoes: {type: Number, default: 0},
 });
 
 export const UsuarioModel = (mongoose.models.usuarios || 

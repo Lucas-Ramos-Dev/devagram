@@ -8,7 +8,7 @@ import { UsuarioModel } from "../../models/UsuarioModel";
 import jwt from 'jsonwebtoken';
 import md5 from 'md5';
 
-
+//criando endpoint de login onde esta função se torna assíncrona pois depende de respostas de envs, verificaç~]ao de métodos http, busca e verificação de usuários, e conexão com banco de dados
 const endpointLogin = async(req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg | LoginResposta>) => {
 
     //verificando se a .env está criada e informada
@@ -16,7 +16,8 @@ const endpointLogin = async(req: NextApiRequest, res: NextApiResponse <RespostaP
     if(!MINHA_CHAVE_JWT){
         return res.status(500).json({erro: 'ENV JWT não informada!'});
     }
-    
+
+    //verifica se o tipo de método http é 'POST' que no caso é o método que envia informações para o servior, e se for este método, executa uma função, se não for o método 'POST', retorna um erro status(405) onde o tipo de método http não é válido pois é enviado uma informação para o servidor onde é verificado se esta informação existe (login e senha)
     if(req.method === 'POST'){
         const {login, senha} = req.body;
 

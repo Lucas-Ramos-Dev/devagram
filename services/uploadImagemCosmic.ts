@@ -13,7 +13,6 @@ const meuBucketDevaria = createBucketClient({
 });
 
 const storage = multer.memoryStorage();
-
 const upload = multer({
     storage: storage
 });
@@ -23,10 +22,10 @@ const uploadImagemCosmic = async (req: any) => {
         const media_object = {
             originalname: req.file.originalname,
             buffer: req.file.buffer,
-            folder: meuBucketDevaria
+            folder: req.file.meuBucketDevaria.media
         };
 
-        if(req.url && req.url.includes.folder('avatares')){
+        if(req.url && req.url.includes({'folder' : 'avatares'})){
             console.log('Imagem subiu para o cosmic [avatares]')
             return await meuBucketDevaria.media.insertOne({
                 media: media_object
@@ -36,11 +35,9 @@ const uploadImagemCosmic = async (req: any) => {
             return await meuBucketDevaria.media.insertOne({
                 media: media_object
             });
-        }        
+        }
     }
 }
-
-console.log('passou da função!')
 
 export { upload, uploadImagemCosmic };
 

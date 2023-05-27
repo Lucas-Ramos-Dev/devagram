@@ -8,10 +8,15 @@ import md5 from 'md5';
 import { upload, uploadImagemCosmic } from '../../services/uploadImagemCosmic';
 import nc from 'next-connect';
 
-const handler = nc().use(upload.single('file')).post(async (req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg>) => {
+    
+const handler = nc()
+    .use(upload.single('file'))
+    .post(async (req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg>) => {
 
     //capturando os dados do body e tranformando-os em dados tipados com as propriedades necessárias para o usuário realizar o cadastro.    
     const usuario = req.body as CadstroRequisicao;
+
+    console.log('chegando na api de cadastro!')
 
     //validando os dados recebidos (nome, email, senha)
     if(!usuario.nome || usuario.nome.length < 2){
@@ -56,8 +61,7 @@ const handler = nc().use(upload.single('file')).post(async (req: NextApiRequest,
     await UsuarioModel.create(usuarioASerSalvo);
     console.log('Usuário criado com sucesso!')
     return res.status(200).json({msg: 'Usuário criado com sucesso!'});
-    
-    
+        
 });
 
 export const config = {

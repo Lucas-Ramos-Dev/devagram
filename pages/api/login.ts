@@ -20,6 +20,7 @@ const endpointLogin = async(req: NextApiRequest, res: NextApiResponse <RespostaP
 
     //verifica se o tipo de método http é 'POST' que no caso é o método que envia informações para o servior, e se for este método, executa uma função, se não for o método 'POST', retorna um erro status(405) onde o tipo de método http não é válido pois é enviado uma informação para o servidor onde é verificado se esta informação existe (login e senha)
     if(req.method === 'POST'){
+        //realizando um destructuring dos elementos {login, senha} do body através de uma requisição
         const {login, senha} = req.body;
 
         const usuariosEncontrados = await UsuarioModel.find({email: login, senha: md5(senha)});

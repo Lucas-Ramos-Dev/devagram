@@ -6,7 +6,6 @@ const {
     BUCKET_READ_KEY,
     BUCKET_WRITE_KEY} = process.env;
 
-
 const meuBucketDevaria = createBucketClient({
     bucketSlug: 'BUCKET_SLUG',
     readKey: 'BUCKET_READ_KEY',
@@ -24,14 +23,16 @@ const uploadImagemCosmic = async (req: any) => {
         const media_object = {
             originalname: req.file.originalname,
             buffer: req.file.buffer,
-            folder: meuBucketDevaria.media
+            folder: meuBucketDevaria
         };
 
-        if(media_object.folder === req.url && req.url.includes('publicacoes')){
+        if(req.url && req.url.includes('avatares')){
+            console.log('Imagem subiu para o cosmic [avatares]')
             return await meuBucketDevaria.media.insertOne({
                 media: media_object
             });
         }else{
+            console.log('Imagem subiu para o cosmic [publicacoes]');
             return await meuBucketDevaria.media.insertOne({
                 media: media_object
             });

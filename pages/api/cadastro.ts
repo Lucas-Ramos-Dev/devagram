@@ -16,8 +16,6 @@ const handler = nc()
     //capturando os dados do body e tranformando-os em dados tipados com as propriedades necessárias para o usuário realizar o cadastro.    
     const usuario = req.body as CadstroRequisicao;
 
-    console.log('chegando na api de cadastro!')
-
     //validando os dados recebidos (nome, email, senha)
     if(!usuario.nome || usuario.nome.length < 2){
         console.log('Nome inválido!')
@@ -66,7 +64,7 @@ const handler = nc()
 
 export const config = {
     api: {
-        bodyParse: false
+        bodyParser: false
     }
 }
 

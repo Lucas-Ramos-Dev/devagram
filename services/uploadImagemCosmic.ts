@@ -20,14 +20,14 @@ const uploadImagemCosmic = async (req: any) => {
         };
 
 
-        if(req.url && req.url.includes('publicacoes')){
-            console.log('Imagem subiu para o cosmic [publicacoes]')
+        if(req.url && req.url.includes('publicacao')){
+            console.log('Imagem subiu para a pasta [publicacoes]')
             return await meuBucketDevaria.media.insertOne({
                 media: media_object,
                 folder: 'publicacoes'
             });
         }else{
-            console.log('Imagem subiu para o cosmic [avatares]');
+            console.log('Imagem subiu para a pasta [avatares]');
             return await meuBucketDevaria.media.insertOne({
                 media: media_object,
                 folder: 'avatares'

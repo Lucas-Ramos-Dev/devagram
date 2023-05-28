@@ -1,15 +1,10 @@
 import multer from "multer";
 import { createBucketClient } from '@cosmicjs/sdk';
 
-const {
-    BUCKET_SLUG,
-    BUCKET_READ_KEY,
-    BUCKET_WRITE_KEY }=process.env;
-
 const meuBucketDevaria = createBucketClient({
-    bucketSlug: 'BUCKET_SLUG',
-    readKey: 'BUCKET_READ_KEY',
-    writeKey: 'BUCKET_WRITE_KEY'
+    bucketSlug: 'devaria-devagram-5d17e320-fcff-11ed-ae07-e54431c8d2f4',
+    readKey: 'MeoZ4V77rRCCOvd5TzeGYukI4rwVqAEifJtGxRj7DLK7ShXgcp',
+    writeKey : 'lCNari6LClMU1P7bpdxD5bbNPHwTDh99yfs5VUlwpDb3xXCyCb'
 });
 
 const storage = multer.memoryStorage();
@@ -24,14 +19,15 @@ const uploadImagemCosmic = async (req: any) => {
             buffer: req.file.buffer,
         };
 
+
         if(req.url && req.url.includes('publicacoes')){
-            console.log('Imagem subiu para o cosmic [avatares]')
+            console.log('Imagem subiu para o cosmic [publicacoes]')
             return await meuBucketDevaria.media.insertOne({
                 media: media_object,
                 folder: 'publicacoes'
             });
         }else{
-            console.log('Imagem subiu para o cosmic [publicacoes]');
+            console.log('Imagem subiu para o cosmic [avatares]');
             return await meuBucketDevaria.media.insertOne({
                 media: media_object,
                 folder: 'avatares'

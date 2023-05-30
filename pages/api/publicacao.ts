@@ -12,7 +12,7 @@ const handler = nc()
     .post(async(req: any, res: NextApiResponse <RespostaPadraoMsg>) => {
 
         try {
-            
+
             const { userId } = req.query;
 
             const usuario = await UsuarioModel.findById(userId);
@@ -28,7 +28,7 @@ const handler = nc()
             //se informados, realiza um destructuring  do valor e atribui a uma constante
             const { descricao } = req?.body;
 
-            //verifica de não tem descricao ou o tamanho da descricao for menor que 2
+            //verifica se não tem descricao ou o tamanho da descricao for menor que 2
             if(!descricao || descricao.length < 2){
                 return res.status(400).json({erro: 'Descrição não é válida!'});
             }
@@ -38,7 +38,7 @@ const handler = nc()
                 return res.status(400).json({erro: 'A imagem é obrigatória!'});
             }
 
-            //se os dados estiverem preenchidos então a imagem será transferida para o cosmic através de uma reqquisição
+            //se os dados estiverem preenchidos então a imagem será transferida para o cosmic através de uma requisição
             const image = await uploadImagemCosmic(req);
 
             //criando um objeto para os dados da publicação
@@ -48,10 +48,10 @@ const handler = nc()
                 foto: image.media.url,
                 data: new Date(),
             }
-            //evento assíncrono onde por fim será criada a publicação
+            //evento assíncrono onde por fim será criada a publicação através do model PublicacaoModel
             await PublicacaoModel.create(publicacao);
             
-            //passado e validado por todas as verificações e retornado uma res de 'sucesso' onde indica que a publicação está validada 
+            //passado e validado por todas as verificações e retornado uma res de 'sucesso' onde indica que a publicação está validada e criada com sucesso
             return res.status(200).json({msg: 'Publicação criada com sucesso!'});
 
         } catch (e) {

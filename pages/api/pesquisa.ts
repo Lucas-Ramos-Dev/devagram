@@ -3,7 +3,6 @@ import type { RespostaPadraoMsg } from '../../types/RespostaPadraoMsg'
 import { conectMongoDB } from '../../middlewares/conectMongoDB';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { UsuarioModel } from '../../models/UsuarioModel';
-import { useId } from 'react';
 
 const pesquisaEndpoint = async(req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg | any[]>) => {
     try {

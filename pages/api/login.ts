@@ -1,5 +1,3 @@
-
-import { log } from "console";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { conectMongoDB} from '../../middlewares/conectMongoDB';
 import { RespostaPadraoMsg } from '../../types/RespostaPadraoMsg';

@@ -47,6 +47,11 @@ const handler = nc()
                 foto: image.media.url,
                 data: new Date(),
             }
+
+            //incrementando e atualizando as publicações do usuário
+            usuario.publicacoes++;
+            await UsuarioModel.findByIdAndUpdate({_id: usuario._id}, usuario);
+
             //evento assíncrono onde por fim será criada a publicação através do model PublicacaoModel
             await PublicacaoModel.create(publicacao);
             

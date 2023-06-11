@@ -6,6 +6,7 @@ import { conectMongoDB } from '../../middlewares/conectMongoDB';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { PublicacaoModel } from '../../models/PublicacaoModel';
 import { UsuarioModel } from '../../models/UsuarioModel';
+import { politicaCORS } from './politicaCORS';
 
 const handler = nc()
     .use(upload.single('file'))
@@ -74,4 +75,4 @@ export const config = {
 //quando esta api for chamada será chamado primeiramente em sequência os middleware de conexão com o banco(mongoDB),
 //de validação de token após o login(o usuário precisa está logado para criar uma publicação),
 //e por último middleware de publicação onde é feito todas as verificações antes de validar a mesma 
-export default conectMongoDB(validarTokenJWT(handler));
+export default politicaCORS(conectMongoDB(validarTokenJWT(handler)));

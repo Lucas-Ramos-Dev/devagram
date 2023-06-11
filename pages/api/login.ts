@@ -5,6 +5,7 @@ import { LoginResposta } from '../../types/LoginResposta';
 import { UsuarioModel } from "../../models/UsuarioModel";
 import jwt from 'jsonwebtoken';
 import md5 from 'md5';
+import { politicaCORS } from "./politicaCORS";
 
 //criando endpoint de login onde esta função se torna assíncrona pois depende de respostas de envs, verificaç~]ao de métodos http, busca e verificação de usuários, e conexão com banco de dados
 const endpointLogin = async(req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg | LoginResposta>) => {
@@ -45,4 +46,4 @@ const endpointLogin = async(req: NextApiRequest, res: NextApiResponse <RespostaP
 }
 
 //primeiro irá realizar a conexão com o banco de dados para depois chamar o endpoint
-export default conectMongoDB(endpointLogin);
+export default politicaCORS(conectMongoDB(endpointLogin));

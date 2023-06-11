@@ -3,6 +3,7 @@ import type { RespostaPadraoMsg } from '../../types/RespostaPadraoMsg'
 import { conectMongoDB } from '../../middlewares/conectMongoDB';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { UsuarioModel } from '../../models/UsuarioModel';
+import { politicaCORS } from './politicaCORS';
 
 const pesquisaEndpoint = async(req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg | any[]>) => {
     try {
@@ -42,4 +43,4 @@ const pesquisaEndpoint = async(req: NextApiRequest, res: NextApiResponse <Respos
 
 }
 
-export default validarTokenJWT(conectMongoDB(pesquisaEndpoint));
+export default politicaCORS(validarTokenJWT(conectMongoDB(pesquisaEndpoint)));

@@ -12,13 +12,16 @@ const likeEndpoint = async(req: NextApiRequest, res: NextApiResponse <RespostaPa
             //capturando o id da publicação
             const { id } = req.query;
 
+            //cria um objeto e faz uma busca atraves do seu id, onde fazemos uma verificacao se esta publicacao existe
             const publicacao = await PublicacaoModel.findById(id);
             if(!publicacao){
                 res.status(400).json({erro: 'Publicação não encontrada!'})
             }
 
-            //id do usuário que está curtindo a foto
+            //faz um destructuring do objeto userId atraves de uma requisicao/consulta
             const { userId } = req.query;
+
+            //criando um objeto usuario, fazendo uma busca do userId no DB  e atribuindo a este objeto(usuario) e verificando se o usuario/userId existe
             const usuario = await UsuarioModel.findById(userId);
             if(!usuario){
                 res.status(400).json({erro: 'Usuário não encontrado!'})

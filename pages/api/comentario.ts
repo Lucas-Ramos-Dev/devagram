@@ -39,8 +39,8 @@ const comentarioEndpoint = async(req: NextApiRequest, res: NextApiResponse <Resp
             return res.status(405).json({erro: 'Método informado não é válido!'})
         }
 
-    }catch(erroCapturado){
-        console.log(erroCapturado);
+    }catch(e){
+        console.log(e);
         return res.status(500).json({erro: 'Erro ao adicionar comentários!'});
     }
 }

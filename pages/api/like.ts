@@ -27,6 +27,14 @@ const likeEndpoint = async(req: NextApiRequest, res: NextApiResponse <RespostaPa
                 res.status(400).json({erro: 'Usuário não encontrado!'})
             }
 
+            const notificacao = {
+                usuarioRealizaAcao: userId,
+                usuarioNotificado: ,
+                tipo: 'curtiu',
+                dataNotificacao: Date,
+                visualizada: false
+            }
+
             //como vamos administrar os likes
             const indexDoUsuarioNoLike = publicacao.likes.findIndex((e: any) => 
                 e.toString() === usuario._id.toString());

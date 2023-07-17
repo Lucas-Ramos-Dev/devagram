@@ -21,7 +21,7 @@ const feedEndpoint  = async(req: NextApiRequest, res: NextApiResponse <RespostaP
                     .find({idUsuario: usuario.id})
                     .sort({data: -1});//ordenando as publicações buscadas da mais nova p/ as mais antigas(data)
             
-                return res.status(405).json(publicacoes); 
+                return res.status(200).json(publicacoes); 
             }else{
                 const { userId } =req.query;
                 const usuarioLogado = await UsuarioModel.findById(userId);
@@ -59,8 +59,8 @@ const feedEndpoint  = async(req: NextApiRequest, res: NextApiResponse <RespostaP
             return res.status(405).json({erro: 'Método informado não é válido!'});
         }
 
-    } catch(erroCapturado){
-        console.log(erroCapturado);
+    } catch(e){
+        console.log(e);
         res.status(400).json({erro: 'Não foi possível obter o Feed!'});
     }
 }

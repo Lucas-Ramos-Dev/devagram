@@ -14,6 +14,7 @@ const handler = nc()
         try {
 
             //se eu quero alterar o usuário então eu preciso primeiro pegar o usuário no DB
+            //realizando uma atribuicao de um destructuring
             const { userId } = req?.query;
             const usuario = await UsuarioModel.findById(userId);
 
@@ -49,7 +50,7 @@ const handler = nc()
     }).get(async(req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg | any>) => {
 
         try {
-            const { userId } = req.query;//buscando o userId através de uma query onde este userId é achado no tokenJWT
+            const { userId } = req.query;//buscando o userId através de uma query 
             const usuario = await UsuarioModel.findById(userId);
             usuario.senha = null //ocultando o campo senha para que não a retorne no json dos dados do usuário
             return res.status(200).json(usuario);

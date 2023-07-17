@@ -66,9 +66,9 @@
     {
       "id": "pointer:pointer",
       "typeName": "pointer",
-      "x": -524.8859412501724,
-      "y": 688.6678184793712,
-      "lastActivityTimestamp": 1689444183438,
+      "x": 825.4185702539612,
+      "y": 2985.3108066694276,
+      "lastActivityTimestamp": 1689550290527,
       "meta": {}
     },
     {
@@ -79,9 +79,9 @@
       "typeName": "page"
     },
     {
-      "x": 4491.109757635492,
-      "y": 492.14106649668236,
-      "z": 0.30911014021325056,
+      "x": 1110.9917047573806,
+      "y": -585.9193664284979,
+      "z": 0.295908365801583,
       "meta": {},
       "id": "camera:page:nSnz60C-Al1tbwKM4MVvj",
       "typeName": "camera"
@@ -90,7 +90,7 @@
       "editingId": null,
       "croppingId": null,
       "selectedIds": [],
-      "hoveredId": null,
+      "hoveredId": "shape:aVwgBMTqj-GI0GL1Babe2",
       "erasingIds": [],
       "hintingIds": [],
       "focusLayerId": null,
@@ -104,8 +104,8 @@
       "opacityForNextShape": 1,
       "stylesForNextShape": {
         "tldraw:horizontalAlign": "start",
-        "tldraw:geo": "rectangle",
-        "tldraw:color": "red",
+        "tldraw:geo": "star",
+        "tldraw:color": "black",
         "tldraw:size": "xl",
         "tldraw:fill": "none",
         "tldraw:dash": "solid"
@@ -124,7 +124,7 @@
       "screenBounds": {
         "x": 0,
         "y": 0,
-        "w": 1647,
+        "w": 901,
         "h": 931
       },
       "zoomBrush": null,
@@ -1016,36 +1016,12 @@
       "typeName": "shape"
     },
     {
-      "x": -1037.6886665956386,
-      "y": 3345.7352482246706,
-      "rotation": 0,
-      "isLocked": false,
-      "opacity": 1,
-      "meta": {},
-      "type": "text",
-      "props": {
-        "color": "orange",
-        "size": "xl",
-        "w": 2817.890625,
-        "text": "- quando o usuario estiver na HOME e clicar no botao de notificaoes e mostrar a listagem, este carregamento e gerado por \numa nova api? no caso terei que definir um nova regra pra gerar este carregamento",
-        "font": "draw",
-        "align": "start",
-        "autoSize": true,
-        "scale": 1
-      },
-      "parentId": "page:nSnz60C-Al1tbwKM4MVvj",
-      "index": "aZ",
-      "id": "shape:Ufq48q6UYfElLLlpUSE87",
-      "typeName": "shape"
-    },
-    {
       "x": 44.160708450113816,
       "y": 19.681437828645016,
       "rotation": 0,
       "isLocked": false,
       "opacity": 1,
       "meta": {},
-      "id": "shape:pD3Z1OhCsX2jK8f86djXX",
       "type": "text",
       "props": {
         "color": "black",
@@ -1059,6 +1035,7 @@
       },
       "parentId": "shape:SeSB123kkIVWQ5uJGAE6w",
       "index": "a1",
+      "id": "shape:pD3Z1OhCsX2jK8f86djXX",
       "typeName": "shape"
     },
     {
@@ -1068,7 +1045,6 @@
       "isLocked": false,
       "opacity": 1,
       "meta": {},
-      "id": "shape:Cevw4jdpz5mVK25iB3j_i",
       "type": "text",
       "props": {
         "color": "black",
@@ -1082,6 +1058,7 @@
       },
       "parentId": "shape:JL3K1NYXxiYsElJJ5aCqC",
       "index": "a2",
+      "id": "shape:Cevw4jdpz5mVK25iB3j_i",
       "typeName": "shape"
     },
     {
@@ -1091,7 +1068,6 @@
       "isLocked": false,
       "opacity": 1,
       "meta": {},
-      "id": "shape:OvV3GVtVcOiQLA9emigaT",
       "type": "arrow",
       "parentId": "page:nSnz60C-Al1tbwKM4MVvj",
       "index": "ac",
@@ -1117,6 +1093,7 @@
         "text": "",
         "font": "draw"
       },
+      "id": "shape:OvV3GVtVcOiQLA9emigaT",
       "typeName": "shape"
     },
     {
@@ -1126,7 +1103,6 @@
       "isLocked": false,
       "opacity": 1,
       "meta": {},
-      "id": "shape:kuAbfxgZ5TuzCba9GwfUl",
       "type": "geo",
       "props": {
         "w": 701.4513701414489,
@@ -1146,6 +1122,7 @@
       },
       "parentId": "shape:SeSB123kkIVWQ5uJGAE6w",
       "index": "a2",
+      "id": "shape:kuAbfxgZ5TuzCba9GwfUl",
       "typeName": "shape"
     },
     {
@@ -1155,7 +1132,6 @@
       "isLocked": false,
       "opacity": 1,
       "meta": {},
-      "id": "shape:AxUDf2uvzgr9Y3eryv071",
       "type": "geo",
       "props": {
         "w": 1707.4803088969481,
@@ -1175,6 +1151,7 @@
       },
       "parentId": "shape:JL3K1NYXxiYsElJJ5aCqC",
       "index": "a1",
+      "id": "shape:AxUDf2uvzgr9Y3eryv071",
       "typeName": "shape"
     },
     {
@@ -1184,11 +1161,11 @@
       "isLocked": false,
       "opacity": 1,
       "meta": {},
-      "id": "shape:JL3K1NYXxiYsElJJ5aCqC",
       "type": "group",
       "parentId": "page:nSnz60C-Al1tbwKM4MVvj",
       "index": "af",
       "props": {},
+      "id": "shape:JL3K1NYXxiYsElJJ5aCqC",
       "typeName": "shape"
     },
     {
@@ -1198,11 +1175,11 @@
       "isLocked": false,
       "opacity": 1,
       "meta": {},
-      "id": "shape:aVwgBMTqj-GI0GL1Babe2",
       "type": "group",
       "parentId": "page:nSnz60C-Al1tbwKM4MVvj",
       "index": "aX",
       "props": {},
+      "id": "shape:aVwgBMTqj-GI0GL1Babe2",
       "typeName": "shape"
     },
     {
@@ -1212,11 +1189,11 @@
       "isLocked": false,
       "opacity": 1,
       "meta": {},
-      "id": "shape:P1gp3tyXbJP4elDORQb48",
       "type": "group",
       "parentId": "page:nSnz60C-Al1tbwKM4MVvj",
       "index": "aP",
       "props": {},
+      "id": "shape:P1gp3tyXbJP4elDORQb48",
       "typeName": "shape"
     },
     {
@@ -1226,11 +1203,11 @@
       "isLocked": false,
       "opacity": 1,
       "meta": {},
-      "id": "shape:H02LTC0PmaOqB--lT52Xa",
       "type": "group",
       "parentId": "page:nSnz60C-Al1tbwKM4MVvj",
       "index": "aU",
       "props": {},
+      "id": "shape:H02LTC0PmaOqB--lT52Xa",
       "typeName": "shape"
     },
     {
@@ -1240,11 +1217,11 @@
       "isLocked": false,
       "opacity": 1,
       "meta": {},
-      "id": "shape:oR9QwbM1cxY8VhKrIneck",
       "type": "group",
       "parentId": "page:nSnz60C-Al1tbwKM4MVvj",
       "index": "aD",
       "props": {},
+      "id": "shape:oR9QwbM1cxY8VhKrIneck",
       "typeName": "shape"
     },
     {
@@ -1254,7 +1231,6 @@
       "isLocked": false,
       "opacity": 1,
       "meta": {},
-      "id": "shape:nD8owjyq0kS8ROM4uM61F",
       "type": "arrow",
       "parentId": "page:nSnz60C-Al1tbwKM4MVvj",
       "index": "ag",
@@ -1280,6 +1256,7 @@
         "text": "",
         "font": "draw"
       },
+      "id": "shape:nD8owjyq0kS8ROM4uM61F",
       "typeName": "shape"
     },
     {
@@ -1289,11 +1266,11 @@
       "isLocked": false,
       "opacity": 1,
       "meta": {},
-      "id": "shape:SeSB123kkIVWQ5uJGAE6w",
       "type": "group",
       "parentId": "page:nSnz60C-Al1tbwKM4MVvj",
       "index": "ad",
       "props": {},
+      "id": "shape:SeSB123kkIVWQ5uJGAE6w",
       "typeName": "shape"
     },
     {

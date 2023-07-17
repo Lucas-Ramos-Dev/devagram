@@ -1,5 +1,5 @@
 export type TipoNotificacao = {
-    curtiu: string,
-    comentou: string,
-    seguiu: string
+    curtida: string,
+    comentario: string,
+    novoSeguidor: string
 }

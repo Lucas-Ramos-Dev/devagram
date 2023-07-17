@@ -5,8 +5,9 @@ import { conectMongoDB } from '../../middlewares/conectMongoDB';
 import { PublicacaoModel } from '../../models/PublicacaoModel';
 import { UsuarioModel } from '@/models/UsuarioModel';
 import { politicaCORS } from './politicaCORS';
+import { TipoNotificacao } from '@/types/TipoNotificacao';
 
-const likeEndpoint = async(req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg>) => {
+const likeEndpoint = async(req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg | TipoNotificacao>) => {
     try {
         if(req.method === 'PUT'){
             //capturando o id da publicação
@@ -25,14 +26,6 @@ const likeEndpoint = async(req: NextApiRequest, res: NextApiResponse <RespostaPa
             const usuario = await UsuarioModel.findById(userId);
             if(!usuario){
                 res.status(400).json({erro: 'Usuário não encontrado!'})
-            }
-
-            const notificacao = {
-                usuarioRealizaAcao: userId,
-                usuarioNotificado: ,
-                tipo: 'curtiu',
-                dataNotificacao: Date,
-                visualizada: false
             }
 
             //como vamos administrar os likes

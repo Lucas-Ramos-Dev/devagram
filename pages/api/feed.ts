@@ -23,7 +23,7 @@ const feedEndpoint  = async(req: NextApiRequest, res: NextApiResponse <RespostaP
             
                 return res.status(200).json(publicacoes); 
             }else{
-                const { userId } =req.query;
+                const { userId } = req.query;
                 const usuarioLogado = await UsuarioModel.findById(userId);
                 
                 if(!usuarioLogado){

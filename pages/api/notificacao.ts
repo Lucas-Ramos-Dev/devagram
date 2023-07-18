@@ -4,27 +4,45 @@ import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { conectMongoDB } from '../../middlewares/conectMongoDB';
 import { politicaCORS } from './politicaCORS';
 import { UsuarioModel } from '@/models/UsuarioModel';
-import nextConnect from 'next-connect';
-import { NextRequest } from 'next/server';
+import { PublicacaoModel } from '@/models/PublicacaoModel';
 
 
-const handler = nextConnect().put(async (req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg | any> ) => {
+const notificacaoEndpoint = async (req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg | any> ) => {
+    try {
 
-        try {
-
-            const { userId } = req?.query; //recuperando o ID decodificado do usuarioLogado no momento
-            const usuario = await UsuarioModel.findById(userId);
-            if(!usuario){
-                return res.status(400).json({msg: 'Usuario nao encontrado!'});
-            }
+        if(req.method === 'GET'){
+            //se dentro da minha req existir uma query, e dentro de minha query tiver a 
+            //propriedade id, entao faco atribuicao a uma variavel realizando uma busca 
+            //com o metodo findById no banco de dados. Por ultimo verifico se este usuario existe, 
+            //caso nao, me retorna um erro 400 que siguinifica que ocorreu um erro na requisicao ou req mal informada.
+            if(req?.query?.id){
+                const usuario = UsuarioModel.findById(req?.query?.id);
+                if(!usuario){
+                    return res.status(400).json({msg: 'Usuario nao encontrado!'});
+                }
                 
-        } catch (e) {
-            console.log(e);
-            return res.status(400).json({erro: 'Nao foi possivel listar as notificacoes!'});
+                //faco uma busca das publicacoes para listagem atraves do modelo no meu banco de dados
+                const publicacoes = await PublicacaoModel
+                    .find({idUsuario: usuario})
+                    .sort({data: -1});
+            
+                return res.status(200).json(publicacoes); 
+            }
+
+            
+
+
+
+
+        }else{
+            return res.status(405).json({erro: 'Método informado não é válido!'});
         }
+                    
+    } catch (e) {
+        console.log(e);
+        return res.status(400).json({erro: 'Nao foi possivel listar as notificacoes!'});
+    }
+}
     
-    }).get(async (req: NextRequest, res: NextApiResponse <RespostaPadraoMsg | any>) => {
 
-    });
-
-export default politicaCORS(validarTokenJWT(conectMongoDB(handler)));
+export default politicaCORS(validarTokenJWT(conectMongoDB(notificacaoEndpoint)));

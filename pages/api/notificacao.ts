@@ -5,9 +5,10 @@ import { conectMongoDB } from '../../middlewares/conectMongoDB';
 import { politicaCORS } from './politicaCORS';
 import { UsuarioModel } from '@/models/UsuarioModel';
 import { PublicacaoModel } from '@/models/PublicacaoModel';
+import { NotificacaoModel } from '@/models/NotificacaoModel';
 
 
-const notificacaoEndpoint = async (req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg | any> ) => {
+const notificacaoEndpoint = async (req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg> | any) => {
     try {
 
         if(req.method === 'GET'){
@@ -22,13 +23,46 @@ const notificacaoEndpoint = async (req: NextApiRequest, res: NextApiResponse <Re
                 }
                 
                 //faco uma busca das publicacoes para listagem atraves do modelo no meu banco de dados
-                const publicacoes = await PublicacaoModel
-                    .find({idUsuario: usuario})
-                    .sort({data: -1});
-            
-                return res.status(200).json(publicacoes); 
+                const publicacoes = await PublicacaoModel.find({idUsuario: usuario})
+                
+
+
+                //criacao de um objeto com propriedades que definirao as categorias das notificacoes, onde cada propriedade
+                // carrega um tipo, new Date(), que corresponde a data atual e em seguida alteraremos seus valores para 
+                //carregarem as notificacoes dos dias especificados.
+                const categoriaNotificacao = {
+                    novas: new Date(), //nao precisaremos as novas notificacoes pois elas carregam o valor da data atual 
+                    ultSeteDias: new Date(),
+                    ultTrintaDias: new Date()
+                }
+
+                //const novasNaoVisualizadas = categoriaNotificacao.novas;
+
+                //nova variavel do tipo Date() onde setamos o seu valor atual atraves do metodo setDate(recebe um novo valor de 1 a 31)
+                //passando como parametro a variavel em si com o metodo getDate(pega a data atual) menos os 
+                //7 dias e retorna seu valor. 
+                const vistaSeteDiasAtras = new Date(); 
+                vistaSeteDiasAtras.setDate(vistaSeteDiasAtras.getDate() - 7);
+                categoriaNotificacao.ultSeteDias = vistaSeteDiasAtras;
+
+                //nova variavel do tipo Date() onde setamos o seu valor atual atraves do metodo setDate(recebe um novo valor de 1 a 31)
+                //passando como parametro a variavel em si com o metodo getDate(pega a data atual) menos os 
+                //7 dias e retorna seu valor. 
+                const vistaTrintaDiasAtras = new Date();
+                vistaTrintaDiasAtras.setDate(vistaTrintaDiasAtras.getDate() - 30);
+                categoriaNotificacao.ultTrintaDias = vistaTrintaDiasAtras;
+               
+                const novasNaoVisualizadas = categoriaNotificacao.novas;
+                
+                await NotificacaoModel
+
+
+
+
+    
             }
 
+            
             
 
 

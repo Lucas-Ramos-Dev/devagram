@@ -5,8 +5,8 @@
 import mongoose, { Schema } from "mongoose";
 
 const NotificacaoSchema = new Schema({
-    usuarioLogado:  {type: String,   require: true}, //usuarioLogado
-    usuarioRealizaAcao: {type: String,   require: true}, //usuarioSeguidor
+    usuarioLogadoId:  {type: String,   require: true}, //usuarioLogado
+    usuarioRealizaAcaoId: {type: String,   require: true}, //usuarioSeguidor
     tipoNotificacao:    {type: String,   require: true}, //curtida, comentario, novoSeguidor
     publicacao:         {type: String,   require: true}, //a publicacao onde ocorreu o evento(curtida, comentario). Novo seguidor sera direcionado para o usuarioLogado
     dataNotificacao:    {type: Date,     require: true}, //data que ocorreu o evento

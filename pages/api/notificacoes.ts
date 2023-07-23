@@ -23,15 +23,13 @@ const notificacaoEndpoint = async (req: NextApiRequest, res: NextApiResponse <Re
             visualizada: false,        
         });
 
-        //realizando um tratamento e salvamento dos dados no DB. O .save() é um método de instância do modelo do Mongoose. Ele é usado 
-        //para salvar uma instância específica de um documento no banco de dados. Você primeiro cria uma instância de um documento, modifica 
-        //os valores dos atributos conforme necessário e, em seguida, chama o método .save() para persistir essas mudanças no banco de dados.
+        //O .save() é um método de instância do modelo do Mongoose. Ele é usado para salvar uma instância específica de um documento 
+        //no banco de dados. Você primeiro cria uma instância de um documento, modifica os valores dos atributos conforme necessário e, 
+        //em seguida, chama o método .save() para persistir essas mudanças no banco de dados.
         const novaNotificacao = await notificacao.save();
-        if(novaNotificacao){
-            return res.status(200).json({msg: 'Notificacao gerada com sucesso!'});
-        }
+        console.log('Notificacao gerada com sucesso!');
 
-        
+
         if(req.method === 'GET'){
             if(req?.query?.id){
                 const usuario = UsuarioModel.findById(req?.query?.id);
@@ -39,58 +37,20 @@ const notificacaoEndpoint = async (req: NextApiRequest, res: NextApiResponse <Re
                     return res.status(400).json({msg: 'Usuario nao encontrado!'});
                 }
 
-                const listagemNotificacoesUsuarioId = await NotificacaoModel.find({
-                    $or: [
-                        {usuarioLogadoId: usuario},
-                        {usuarioRealizaAcaoId: usuario}
-                    ]
-                }).exec();
-
-                if(listagemNotificacoesUsuarioId){
-
-                    //criacao de um objeto com propriedades que definirao as categorias das notificacoes, onde cada propriedade
-                    // carrega um tipo, new Date(), que corresponde a data atual e em seguida alteraremos seus valores para 
-                    //carregarem as notificacoes por datas especificadas.
-                    const categoriaNotificacao = {
-                        novas:[{
-                            notificacao.usuarioRealizaAcaoId = 
-                        }], //nao precisaremos alterar as novas notificacoes pois elas carregam o valor da data atual 
-                        ultimasSeteDias:    [],
-                        ultimasTrintaDias:  []
-                    }
-
-                    categoriaNotificacao.novas = () => {
-                        
-                    }
-
-
-                    //nova variavel do tipo Date() onde setamos o seu valor atual atraves do metodo setDate(recebe um novo valor de 1 a 31)
-                    //passando como parametro a variavel em si com o metodo getDate(pega a data atual) menos os 
-                    //7 dias e retorna seu valor. 
-                    const vistaSeteDiasAtras = new Date();
-                    vistaSeteDiasAtras.setDate(vistaSeteDiasAtras.getDate() - 7);
-                    categoriaNotificacao.ultimasSeteDias = vistaSeteDiasAtras;
-
-                    //nova variavel do tipo Date() onde setamos o seu valor atual atraves do metodo setDate(recebe um novo valor de 1 a 31)
-                    //passando como parametro a variavel em si com o metodo getDate(pega a data atual) menos os 
-                    //7 dias e retorna seu valor.
-                    const vistaTrintaDiasAtras = new Date();
-                    vistaTrintaDiasAtras.setDate(vistaTrintaDiasAtras.getDate() - 30);
-                    categoriaNotificacao.ultimasTrintaDias = vistaTrintaDiasAtras;
-
-                    listagemNotificacoesUsuarioId = categoriaNotificacao;
-
-
-                    return res.status(200).json(listagemNotificacoesUsuarioId);
+                const listaNotificacao = await NotificacaoModel.find({
+                        $or: [
+                            {usuarioLogadoId: novaNotificacao._id}, 
+                        ]
+                    }).exec();
+                if(listaNotificacao.length > 0){
+                    return res.status(200).json(listaNotificacao);
+                }else{
+                    return res.status(404).json({msg: 'Nenhuma notificacao encontrada!'});
                 }
 
-        }else{
-            return res.status(405).json({erro: 'Método informado não é válido!'});
+            }
         }
-
-                    
-        
-    }
+            
     }catch(e) {
         console.log(e);
         return res.status(400).json({erro: 'Nao foi possivel listar as notificacoes!'});
@@ -98,7 +58,86 @@ const notificacaoEndpoint = async (req: NextApiRequest, res: NextApiResponse <Re
 
 }
 
-    
-    
-
 export default politicaCORS(validarTokenJWT(conectMongoDB(notificacaoEndpoint)));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//     if(req.method === 'GET'){
+    //         if(req?.query?.id){
+    //             const usuario = UsuarioModel.findById(req?.query?.id);
+    //             if(!usuario){
+    //                 return res.status(400).json({msg: 'Usuario nao encontrado!'});
+    //             }
+
+    //             const listagemNotificacoesUsuarioId = await NotificacaoModel.find({
+    //                 $or: [
+    //                     {usuarioLogadoId: usuario},
+    //                     {usuarioRealizaAcaoId: usuario}
+    //                 ]
+    //             }).exec();
+
+    //             if(listagemNotificacoesUsuarioId){
+
+    //                 //criacao de um objeto com propriedades que definirao as categorias das notificacoes, onde cada propriedade
+    //                 // carrega um tipo, new Date(), que corresponde a data atual e em seguida alteraremos seus valores para 
+    //                 //carregarem as notificacoes por datas especificadas.
+    //                 const categoriaNotificacao = {
+    //                     novas:[{
+    //                         notificacao.usuarioRealizaAcaoId = 
+    //                     }], //nao precisaremos alterar as novas notificacoes pois elas carregam o valor da data atual 
+    //                     ultimasSeteDias:    [],
+    //                     ultimasTrintaDias:  []
+    //                 }
+
+    //                 categoriaNotificacao.novas = () => {
+                        
+    //                 }
+
+
+    //                 //nova variavel do tipo Date() onde setamos o seu valor atual atraves do metodo setDate(recebe um novo valor de 1 a 31)
+    //                 //passando como parametro a variavel em si com o metodo getDate(pega a data atual) menos os 
+    //                 //7 dias e retorna seu valor. 
+    //                 const vistaSeteDiasAtras = new Date();
+    //                 vistaSeteDiasAtras.setDate(vistaSeteDiasAtras.getDate() - 7);
+    //                 categoriaNotificacao.ultimasSeteDias = vistaSeteDiasAtras;
+
+    //                 //nova variavel do tipo Date() onde setamos o seu valor atual atraves do metodo setDate(recebe um novo valor de 1 a 31)
+    //                 //passando como parametro a variavel em si com o metodo getDate(pega a data atual) menos os 
+    //                 //7 dias e retorna seu valor.
+    //                 const vistaTrintaDiasAtras = new Date();
+    //                 vistaTrintaDiasAtras.setDate(vistaTrintaDiasAtras.getDate() - 30);
+    //                 categoriaNotificacao.ultimasTrintaDias = vistaTrintaDiasAtras;
+
+    //                 listagemNotificacoesUsuarioId = categoriaNotificacao;
+
+
+    //                 return res.status(200).json(listagemNotificacoesUsuarioId);
+    //             }
+
+    //     }else{
+    //         return res.status(405).json({erro: 'Método informado não é válido!'});
+    //     }
+
+                    
+        
+    // }

@@ -4,44 +4,41 @@ import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { conectMongoDB } from '../../middlewares/conectMongoDB';
 import { politicaCORS } from './politicaCORS';
 import { UsuarioModel } from '@/models/UsuarioModel';
-import { PublicacaoModel } from '@/models/PublicacaoModel';
 import { NotificacaoModel } from '@/models/NotificacaoModel';
 
 const notificacaoEndpoint = async (req: NextApiRequest, res: NextApiResponse <RespostaPadraoMsg> | any) => {
     try {
 
-        //criando um novo objeto atraves de uma instancia do meu NotificacaoModel com os mesmos atributos.
-        //O await é usado aqui porque a função create() é uma operação assíncrona que retorna
-        //uma promessa, e o await aguarda a conclusão da promessa e obtém o resultado, onde esta funcao cria e savla
-        // um novo documento com os atributos definidos e, em seguida, o salva no banco de dados em uma única operação. 
-        const notificacao = await NotificacaoModel.create({
-            usuarioLogadoId: null, 
-            usuarioRealizaAcaoId: null,
-            tipoNotificacao: null,    
-            publicacao: null,         
-            dataNotificacao: Date(),    
-            visualizada: false,        
-        });
-
-        //O .save() é um método de instância do modelo do Mongoose. Ele é usado para salvar uma instância específica de um documento 
-        //no banco de dados. Você primeiro cria uma instância de um documento, modifica os valores dos atributos conforme necessário e, 
-        //em seguida, chama o método .save() para persistir essas mudanças no banco de dados.
-        const novaNotificacao = await notificacao.save();
-        console.log('Notificacao gerada com sucesso!');
-
-
         if(req.method === 'GET'){
             if(req?.query?.id){
+                //responsavel por validar se o usuario passou um id dentro da requisicao
                 const usuario = UsuarioModel.findById(req?.query?.id);
                 if(!usuario){
                     return res.status(400).json({msg: 'Usuario nao encontrado!'});
                 }
 
-                const listaNotificacao = await NotificacaoModel.find({
-                        $or: [
-                            {usuarioLogadoId: novaNotificacao._id}, 
-                        ]
-                    }).exec();
+
+                //responsavel por verificar se existe e listar todas as notificacoes atraves de uma busca 
+                //no modelo do db NotificacaoModel, lista as notificacoes do usuario logado buscando pelo seu id
+
+                //buscar pelo dataNotificacao
+                //instanciar a data atual
+                //reduzir a instancia em 7 dias
+                //enviar o retorno em um dataNotificacao com o visualizada = true
+
+                const novasNotificacoes = new Date();
+                const listaNotificacao
+
+                const vistaSeteDiasAtras = new Date();
+                vistaSeteDiasAtras.setDate(vistaSeteDiasAtras.getDate() - 7);
+                const listaNotificacaoSeteDiasAtras = await NotificacaoModel.find({usuarioLogadoId: req.query.id, dataNotificacao: { $gte: vistaSeteDiasAtras }, visualizada: true});
+                console.log(listaNotificacaoSeteDiasAtras);
+
+                const vistaTrintaDiasAtras = new Date();
+                vistaTrintaDiasAtras.setDate(vistaTrintaDiasAtras.getDate() - 30);
+                const listaNotificacaoTrintaDiasAtras = NotificacaoModel.find({usuarioLogadoId: req.query.id, dataNotificacao: { $gte: vistaSeteDiasAtras }, visualizada: true});
+                console.log(res.status(200).json(listaNotificacaoTrintaDiasAtras));
+
                 if(listaNotificacao.length > 0){
                     return res.status(200).json(listaNotificacao);
                 }else{
@@ -50,6 +47,36 @@ const notificacaoEndpoint = async (req: NextApiRequest, res: NextApiResponse <Re
 
             }
         }
+        
+
+        if(req.method === 'POST'){
+            if(req?.query?.id){
+                const usuario = UsuarioModel.findById(req?.query?.id);
+                if(!usuario){
+                    return res.status(400).json({msg: 'Usuario nao encontrado!'});
+                }
+
+                
+                console.log('cheguei');
+
+
+
+                const notificacao = await NotificacaoModel.create({
+                    usuarioLogadoId: req.query.id, 
+                    usuarioRealizaAcaoId: null,
+                    tipoNotificacao: null,    
+                    publicacao: null,         
+                    dataNotificacao: new Date(),    
+                    visualizada: false,
+                });
+
+                notificacao.save();
+
+                return res.status(200).json(notificacao);
+
+            }
+        }
+        
             
     }catch(e) {
         console.log(e);
@@ -64,7 +91,25 @@ export default politicaCORS(validarTokenJWT(conectMongoDB(notificacaoEndpoint)))
 
 
 
+ // const categoriaNotificacao = {
+                //     novas:          new Date(),
+                //     ultiSeteDias:   new Date(),
+                //     ultiTrintaDias: new Date()
+                // }
 
+                // notificacao.$where(() => {
+                //     return categoriaNotificacao.novas;
+                // });
+
+                // notificacao.$where(() => {
+                //     categoriaNotificacao.ultiSeteDias.setDate(categoriaNotificacao.ultiSeteDias.getDate() - 7);
+                //     return categoriaNotificacao.ultiSeteDias;
+                // });
+
+                // notificacao.$where(() => {
+                //     categoriaNotificacao.ultiTrintaDias.setDate(categoriaNotificacao.ultiTrintaDias.getDate() - 30);
+                //     return categoriaNotificacao.ultiTrintaDias;
+                // });
 
 
 

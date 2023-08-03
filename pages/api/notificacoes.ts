@@ -11,36 +11,59 @@ const notificacaoEndpoint = async (req: NextApiRequest, res: NextApiResponse <Re
 
         if(req.method === 'GET'){
             if(req?.query?.id){
-                //responsavel por validar se o usuario passou um id dentro da requisicao
                 const usuario = UsuarioModel.findById(req?.query?.id);
                 if(!usuario){
                     return res.status(400).json({msg: 'Usuario nao encontrado!'});
                 }
 
+                const publicacao = await NotificacaoModel.findById({}) // como capturar o id do usuario que realizou a acao
 
-                //responsavel por verificar se existe e listar todas as notificacoes atraves de uma busca 
-                //no modelo do db NotificacaoModel, lista as notificacoes do usuario logado buscando pelo seu id
-
-                //buscar pelo dataNotificacao
-                //instanciar a data atual
-                //reduzir a instancia em 7 dias
-                //enviar o retorno em um dataNotificacao com o visualizada = true
+                const notificacao = new NotificacaoModel({
+                    usuarioLogadoId: req.query.id, 
+                    usuarioRealizaAcaoId: null,
+                    tipoNotificacao: [{
+                        comentario: 'comentou', 
+                        curtida: 'curtiu', 
+                        novoSeguidor: 'seguiu'
+                    }],    
+                    publicacao: null,         
+                    dataNotificacao: new Date(),    
+                    visualizada: false,
+                });
 
                 const novasNotificacoes = new Date();
-                const listaNotificacao
+                const listaNovasNotificacao = await NotificacaoModel.find({
+                    usuarioLogadoId: req.query.id, 
+                    dataNotificacao: novasNotificacoes, 
+                    visualizada: false
+                });
 
                 const vistaSeteDiasAtras = new Date();
                 vistaSeteDiasAtras.setDate(vistaSeteDiasAtras.getDate() - 7);
-                const listaNotificacaoSeteDiasAtras = await NotificacaoModel.find({usuarioLogadoId: req.query.id, dataNotificacao: { $gte: vistaSeteDiasAtras }, visualizada: true});
-                console.log(listaNotificacaoSeteDiasAtras);
+                const listaNotificacaoSeteDiasAtras = await NotificacaoModel.find({
+                    usuarioLogadoId: req.query.id, 
+                    dataNotificacao: { $gte: vistaSeteDiasAtras }, // ($gte) -> operador de consulta(query) utilizado no MongoDB em conjunto com o Mongoose. siguinifica >= (maior ou igual)
+                    visualizada: true
+                });
 
                 const vistaTrintaDiasAtras = new Date();
                 vistaTrintaDiasAtras.setDate(vistaTrintaDiasAtras.getDate() - 30);
-                const listaNotificacaoTrintaDiasAtras = NotificacaoModel.find({usuarioLogadoId: req.query.id, dataNotificacao: { $gte: vistaSeteDiasAtras }, visualizada: true});
-                console.log(res.status(200).json(listaNotificacaoTrintaDiasAtras));
+                const listaNotificacaoTrintaDiasAtras = NotificacaoModel.find({
+                    usuarioLogadoId: req.query.id, 
+                    dataNotificacao: { $gte: vistaSeteDiasAtras }, 
+                    visualizada: true
+                });
 
-                if(listaNotificacao.length > 0){
-                    return res.status(200).json(listaNotificacao);
+                //cada categoria carregara um array de objetos que no caso, este objeto sera a notificacao em si
+                const categoriaNotificacao = {
+                    novas: [{listaNovasNotificacao}],
+                    ultiSeteDias: [{listaNotificacaoSeteDiasAtras}],
+                    ultiTrintaDias: [{listaNotificacaoTrintaDiasAtras}]
+                }
+
+
+                if(categoriaNotificacao){
+                    return res.status(200).json(categoriaNotificacao);
                 }else{
                     return res.status(404).json({msg: 'Nenhuma notificacao encontrada!'});
                 }
@@ -48,31 +71,13 @@ const notificacaoEndpoint = async (req: NextApiRequest, res: NextApiResponse <Re
             }
         }
         
-
-        if(req.method === 'POST'){
+        if(req.method === 'PUT'){
             if(req?.query?.id){
                 const usuario = UsuarioModel.findById(req?.query?.id);
                 if(!usuario){
                     return res.status(400).json({msg: 'Usuario nao encontrado!'});
                 }
-
-                
-                console.log('cheguei');
-
-
-
-                const notificacao = await NotificacaoModel.create({
-                    usuarioLogadoId: req.query.id, 
-                    usuarioRealizaAcaoId: null,
-                    tipoNotificacao: null,    
-                    publicacao: null,         
-                    dataNotificacao: new Date(),    
-                    visualizada: false,
-                });
-
-                notificacao.save();
-
-                return res.status(200).json(notificacao);
+                               
 
             }
         }
@@ -86,103 +91,3 @@ const notificacaoEndpoint = async (req: NextApiRequest, res: NextApiResponse <Re
 }
 
 export default politicaCORS(validarTokenJWT(conectMongoDB(notificacaoEndpoint)));
-
-
-
-
-
- // const categoriaNotificacao = {
-                //     novas:          new Date(),
-                //     ultiSeteDias:   new Date(),
-                //     ultiTrintaDias: new Date()
-                // }
-
-                // notificacao.$where(() => {
-                //     return categoriaNotificacao.novas;
-                // });
-
-                // notificacao.$where(() => {
-                //     categoriaNotificacao.ultiSeteDias.setDate(categoriaNotificacao.ultiSeteDias.getDate() - 7);
-                //     return categoriaNotificacao.ultiSeteDias;
-                // });
-
-                // notificacao.$where(() => {
-                //     categoriaNotificacao.ultiTrintaDias.setDate(categoriaNotificacao.ultiTrintaDias.getDate() - 30);
-                //     return categoriaNotificacao.ultiTrintaDias;
-                // });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     if(req.method === 'GET'){
-    //         if(req?.query?.id){
-    //             const usuario = UsuarioModel.findById(req?.query?.id);
-    //             if(!usuario){
-    //                 return res.status(400).json({msg: 'Usuario nao encontrado!'});
-    //             }
-
-    //             const listagemNotificacoesUsuarioId = await NotificacaoModel.find({
-    //                 $or: [
-    //                     {usuarioLogadoId: usuario},
-    //                     {usuarioRealizaAcaoId: usuario}
-    //                 ]
-    //             }).exec();
-
-    //             if(listagemNotificacoesUsuarioId){
-
-    //                 //criacao de um objeto com propriedades que definirao as categorias das notificacoes, onde cada propriedade
-    //                 // carrega um tipo, new Date(), que corresponde a data atual e em seguida alteraremos seus valores para 
-    //                 //carregarem as notificacoes por datas especificadas.
-    //                 const categoriaNotificacao = {
-    //                     novas:[{
-    //                         notificacao.usuarioRealizaAcaoId = 
-    //                     }], //nao precisaremos alterar as novas notificacoes pois elas carregam o valor da data atual 
-    //                     ultimasSeteDias:    [],
-    //                     ultimasTrintaDias:  []
-    //                 }
-
-    //                 categoriaNotificacao.novas = () => {
-                        
-    //                 }
-
-
-    //                 //nova variavel do tipo Date() onde setamos o seu valor atual atraves do metodo setDate(recebe um novo valor de 1 a 31)
-    //                 //passando como parametro a variavel em si com o metodo getDate(pega a data atual) menos os 
-    //                 //7 dias e retorna seu valor. 
-    //                 const vistaSeteDiasAtras = new Date();
-    //                 vistaSeteDiasAtras.setDate(vistaSeteDiasAtras.getDate() - 7);
-    //                 categoriaNotificacao.ultimasSeteDias = vistaSeteDiasAtras;
-
-    //                 //nova variavel do tipo Date() onde setamos o seu valor atual atraves do metodo setDate(recebe um novo valor de 1 a 31)
-    //                 //passando como parametro a variavel em si com o metodo getDate(pega a data atual) menos os 
-    //                 //7 dias e retorna seu valor.
-    //                 const vistaTrintaDiasAtras = new Date();
-    //                 vistaTrintaDiasAtras.setDate(vistaTrintaDiasAtras.getDate() - 30);
-    //                 categoriaNotificacao.ultimasTrintaDias = vistaTrintaDiasAtras;
-
-    //                 listagemNotificacoesUsuarioId = categoriaNotificacao;
-
-
-    //                 return res.status(200).json(listagemNotificacoesUsuarioId);
-    //             }
-
-    //     }else{
-    //         return res.status(405).json({erro: 'Método informado não é válido!'});
-    //     }
-
-                    
-        
-    // }

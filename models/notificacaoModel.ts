@@ -4,11 +4,7 @@ import mongoose, { Schema } from "mongoose";
 const NotificacaoSchema = new Schema({
     usuarioLogadoId:      {type: String,   require: true}, 
     usuarioRealizaAcaoId: {type: String,   require: true}, 
-    tipoNotificacao:      {type: String,   require: true, default: {
-        comentario: 'comentou', 
-        curtida: 'curtiu', 
-        novoSeguidor: 'seguiu'
-    }},   
+    tipoNotificacao:      {type: String,   require: true},   
     publicacao:           {type: String,   require: false}, 
     dataNotificacao:      {type: Date,     require: true}, 
     visualizada:          {type: Boolean,  require: true, default: false}
